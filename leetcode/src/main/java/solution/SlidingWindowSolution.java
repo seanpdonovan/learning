@@ -1,12 +1,16 @@
+package solution;
+
+import pattern.SlidingWindow;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class SlidingWindow {
+public class SlidingWindowSolution implements SlidingWindow {
 
     /**
      * Problem statement:
      * Find the smallest window whose sum is equal to or greater than the given target.
-     *
+     * <p>
      * Solution summary:
      * Using the sliding window approach, we will add numbers from the right to a running sum.
      * Once we have a running sum that is >= target we will update our return value if appropriate
@@ -14,7 +18,7 @@ public class SlidingWindow {
      *
      * @return The length of the appropriate window.
      */
-    static int MinimumSizeSubarraySum(int target, int[] nums) {
+    public int MinimumSizeSubarraySum(int target, int[] nums) {
         // Keep track of the smallest window with a sum >= target.
         int minimumSize = Integer.MAX_VALUE;
         // Keep track of the sum of the current window.
@@ -40,7 +44,7 @@ public class SlidingWindow {
     /**
      * Problem statement:
      * Find the longest window in the given array with at most 2 distinct integers.
-     *
+     * <p>
      * Solution summary:
      * Using the sliding window approach, we will add fruit frequencies to a Map.
      * If the number of keys in our Map is greater than two, then we need to shrink our window from the left
@@ -50,7 +54,7 @@ public class SlidingWindow {
      *
      * @return The length of the appropriate window.
      */
-    static int FruitsIntoBaskets(int[] fruits) {
+    public int FruitsIntoBaskets(int[] fruits) {
         // Keep track of the longest window in the array that contains 2 unique numbers.
         int longestWindow = 0;
         // Keep track of the number of fruits by type in the current window.
@@ -82,7 +86,7 @@ public class SlidingWindow {
     /**
      * Problem statement:
      * Determine if s2 contains any permutation of s1.
-     *
+     * <p>
      * Solution summary:
      * Using the sliding window approach, we will keep a running count of character frequencies in a Map and a running
      * total of how many character frequencies have been matched in the current window.
@@ -92,8 +96,8 @@ public class SlidingWindow {
      * Once the window is longer than the "pattern" string, we need to shrink it from the left and update the running
      * character frequencies in our Map.
      */
-    static boolean PermutationInString(String s1, String s2) {
-        if (s1.isEmpty()) return true;
+    public boolean PermutationInString(String s1, String s2) {
+        if (s1 == null || s1.length() == 0) return true;
         if (s1.length() > s2.length()) return false;
 
         // Keep track of how many times each character appears in s1.
