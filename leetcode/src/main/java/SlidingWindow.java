@@ -4,7 +4,13 @@ import java.util.Map;
 public class SlidingWindow {
 
     /**
+     * Problem statement:
      * Find the smallest window whose sum is equal to or greater than the given target.
+     *
+     * Solution summary:
+     * Using the sliding window approach, we will add numbers from the right to a running sum.
+     * Once we have a running sum that is >= target we will update our return value if appropriate
+     * and then shrink our window from the left until our running sum is smaller than the target again.
      *
      * @return The length of the appropriate window.
      */
@@ -32,7 +38,15 @@ public class SlidingWindow {
     }
 
     /**
+     * Problem statement:
      * Find the longest window in the given array with at most 2 distinct integers.
+     *
+     * Solution summary:
+     * Using the sliding window approach, we will add fruit frequencies to a Map.
+     * If the number of keys in our Map is greater than two, then we need to shrink our window from the left
+     * until the number of keys is <= 2 again.
+     * While the number of keys is <= 2, and before we move on to the next iteration of the loop, we will
+     * update our returned variable if appropriate.
      *
      * @return The length of the appropriate window.
      */
@@ -63,5 +77,66 @@ public class SlidingWindow {
         }
 
         return longestWindow;
+    }
+
+    /**
+     * Problem statement:
+     * Determine if s2 contains any permutation of s1.
+     *
+     * Solution summary:
+     * Using the sliding window approach, we will keep a running count of character frequencies in a Map and a running
+     * total of how many character frequencies have been matched in the current window.
+     * If we have matched all character frequencies, we have found a permutation and can return "true".
+     * We don't need to worry about characters not in the "pattern" string since we will be keeping our window the same
+     * size as the "pattern" string.
+     * Once the window is longer than the "pattern" string, we need to shrink it from the left and update the running
+     * character frequencies in our Map.
+     */
+    static boolean PermutationInString(String s1, String s2) {
+        if (s1.isEmpty()) return true;
+        if (s1.length() > s2.length()) return false;
+
+        // Keep track of how many times each character appears in s1.
+        Map<Character, Integer> charCounts = new HashMap<>();
+        for (char c : s1.toCharArray()) {
+            charCounts.put(c, charCounts.getOrDefault(c, 0) + 1);
+        }
+
+        // Keep track of how many letter frequencies have been matched in the current window.
+        int matched = 0;
+
+        // Sliding window pattern.
+        int windowStart = 0;
+        for (int windowEnd = 0; windowEnd < s2.length(); windowEnd++) {
+            char rightChar = s2.charAt(windowEnd);
+            // If our map has right char as a key, we will decrement our count for that key.
+            // If we have met the frequency for that character, we increment our matched counter.
+            if (charCounts.containsKey(rightChar)) {
+                charCounts.put(rightChar, charCounts.get(rightChar) - 1);
+                if (charCounts.get(rightChar) == 0) {
+                    matched++;
+                }
+            }
+
+            // If we have matched all of the character frequencies we have found a permutation.
+            if (matched == charCounts.size()) {
+                return true;
+            }
+
+            // Once windowEnd is past the length of s1, we need to move our windowStart to the right.
+            // If we are incrementing a character frequency that we had previously matched, we need to decrement matched.
+            // We increment our map's character frequencies as we shift our windowStart to the right of the characters.
+            if (windowEnd >= s1.length() - 1) {
+                char leftChar = s2.charAt(windowStart++);
+                if (charCounts.containsKey(leftChar)) {
+                    if (charCounts.get(leftChar) == 0) {
+                        matched--;
+                    }
+                    charCounts.put(leftChar, charCounts.get(leftChar) + 1);
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -16,4 +16,11 @@ class SlidingWindowTest {
         assertEquals(3, SlidingWindow.FruitsIntoBaskets(new int[]{1, 2, 1}));
         assertEquals(5, SlidingWindow.FruitsIntoBaskets(new int[]{1, 2, 2, 4, 2, 2, 7, 3}));
     }
+
+    @Test
+    void permutationInString() {
+        assertEquals(true, SlidingWindow.PermutationInString("", ""));
+        assertEquals(false, SlidingWindow.PermutationInString("abcd", "ab"));
+        assertEquals(true, SlidingWindow.PermutationInString("abc", "jfieoabjducbijeapjbcajowk"));
+    }
 }
