@@ -90,4 +90,90 @@ public class ArraysAndStrings {
 
         return oddCount < 2;
     }
+
+    /**
+     * Determine if the given strings are one or fewer edits away from each other.
+     * An edit: insert, remove, or replace a character.
+     */
+    public static boolean oneAway(String s1, String s2) {
+
+        if (s1.length() < s2.length()) return oneAway(s2, s1);
+        if (s2.length() - s1.length() > 1) return false;
+
+        boolean editMade = false;
+
+        int i = 0;
+        int j = 0;
+
+        while (i < s1.length() && j < s2.length()) {
+            if (s1.charAt(i) == s2.charAt(j)) {
+                i++;
+                j++;
+                continue;
+            }
+
+            if (editMade) {
+                return false;
+            }
+
+            editMade = true;
+
+            if (s1.length() > s2.length()) {
+                i++;
+            }
+
+            i++;
+            j++;
+        }
+
+        return true;
+    }
+
+    /**
+     * Compress the given string by character and character count, e.g. aabbcccaa --> a2b2c3a2.
+     * If the compressed string is not shorter, return the original string.
+     */
+    public static String stringCompression(String str) {
+        if (str == null || str.length() < 3) return str;
+
+        StringBuilder sb = new StringBuilder();
+
+        char currentChar = str.charAt(0);
+        int count = 1;
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) == currentChar) {
+                count++;
+            } else {
+                sb.append(currentChar);
+                sb.append(count);
+                currentChar = str.charAt(i);
+                count = 1;
+            }
+        }
+
+        sb.append(currentChar);
+        sb.append(count);
+
+        String result = sb.toString();
+        return result.length() < str.length() ? result : str;
+    }
+
+    /**
+     * Rotate the given matrix by 90 degrees.
+     */
+    public static char[][] rotateMatrix(char[][] matrix) {
+        int n = matrix.length;
+
+        for (int i = 0; i < n / 2; i++) {
+            for (int j = 0; j < (n + 1) / 2; j++) {
+                char temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+        }
+
+        return matrix;
+    }
 }
