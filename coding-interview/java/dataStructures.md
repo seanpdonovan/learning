@@ -110,3 +110,32 @@ for (Map.Entry<String, String> entry : hm.entrySet()) {
 for (String key : hm.keySet())
 for (String value : hm.values())
 ```
+
+## Stack
+
+Time complexity:
+- access O(n)
+- search O(n)
+- insert O(1)
+- remove O(1)
+
+```java
+// Import
+import java.util.Stack;
+
+// Creation
+Stack<Integer> stack = new Stack<>();
+
+// Add
+stack.push(10);
+
+// View top
+stack.peek();
+
+// Remove and return top
+stack.pop();
+
+// Size
+stack.size();
+stack.isEmpty();
+```
